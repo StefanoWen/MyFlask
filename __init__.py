@@ -6,7 +6,7 @@ app = Flask(__name__)
 @app.route('/')
 @app.route('/admin')
 def hello_world():
-    return 'Hello World!'
+	return 'Hello World!'
 
 
 # @app.route('/admin')
@@ -15,4 +15,4 @@ def hello_world():
 
 
 if __name__ == '__main__':
-    app.run(port=8080)
+	app.run(port=8080)
