@@ -1,4 +1,4 @@
 # MyFlask
 
 
-## try to build a simple blog system
+## try to build a simple blog system'MySQL-python' 

@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% block head %}
+    <style>
+        /*web background*/
+        .container {
+            margin-top: 6.5%;
+            margin-bottom: 6.5%;
+            display: table;
+            height: 100%;
+        }
+
+        .row {
+            display: table-cell;
+            vertical-align: middle;
+        }
+
+        /* centered columns styles */
+        .row-centered {
+            text-align: center;
+        }
+
+        .col-centered {
+            display: inline-block;
+            float: none;
+            text-align: left;
+            margin-right: -4px;
+        }
+
+        body {
+            padding-top: 70px;
+            background: url("../static/src/image/bg.jpg") no-repeat;
+            background-size: cover;
+            -webkit-background-size: cover;
+            -o-background-size: cover;
+        {#webkit-filter: blur(0.5px); /* Chrome, Safari, Opera */#}{#filter: blur(0.5px);#}
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row row-centered">
+            <div class="well col-md-6 col-centered">
+                <h2>欢迎登录</h2>
+                <form action="/login/" method="post" role="form">
+                    <div class="input-group input-group-md">
+                    <span class="input-group-addon" id="sizing-addon1"><i class="glyphicon glyphicon-user"
+                                                                          aria-hidden="true"></i></span>
+                        <label for="username" class="sr-only">用户名</label>
+                        <input type="text" class="form-control" id="username" name="username" placeholder="请输入用户昵称"
+                               required autofocus>
+                    </div>
+                    <div class="input-group input-group-md">
+                        <span class="input-group-addon" id="sizing-addon1"><i
+                                class="glyphicon glyphicon-lock"></i></span>
+                        <label for="inputPassword" class="sr-only">密码</label>
+                        <input type="password" class="form-control" id="password" name="password"
+                               placeholder="请输入密码"
+                               required>
+                    </div>
+                    <br/>
+                    {% if get_flashed_messages() %}
+                        <div align="center"><h3>{{ get_flashed_messages()[0] }}</h3></div>
+                        <br/>
+                    {% endif %}
+                    <button type="submit" class="btn btn-success btn-block">登录</button>
+                    <a href="{{ url_for('register_form') }}" type="button"
+                       class="btn btn-info btn-block">还没没有账号？点我注册</a>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

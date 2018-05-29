@@ -5,7 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-    <title>Stefanow's Blog</title>
+    {% if title %}
+        <title>{{ title }} - Stefanow's Blog</title>
+    {% else %}
+        <title>Stefanow's Blog</title>
+    {% endif %}
 
     <!-- Bootstrap -->
     <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
@@ -16,9 +20,19 @@
     <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+    <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <style type="text/css">
-        body{ padding-top: 70px; }
+        body {
+            padding-top: 70px;
+        }
     </style>
+    {% block head %}
+
+    {% endblock %}
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 </head>
 <body>
 
@@ -35,13 +49,14 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">Stefanow's Blog</a>
+                <a class="navbar-brand" href="/">Stefanow's Blog</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
-                    <li><a href="#">Link</a></li>
+                    <li class="active"><a href="{{ url_for('a') }}">a <span class="sr-only">(current)</span></a></li>
+                    <li><a href="{{ url_for('b') }}">b</a></li>
+                    <li><a href="{{ url_for('home') }}">home</a></li>
                 </ul>
                 <img alt="avatar" alt="avatar " src="../static/src/image/jake.jpg"
                      style="max-width:40px;margin-top:5px;margin-left:14px">
@@ -51,43 +66,17 @@
                     </div>
                     <button type="submit" class="btn btn-default">Submit</button>
                 </form>
-                <!--<ul class="nav navbar-nav navbar-right">-->
-                <!--<div class="btn-group">-->
-                <!--<button type="button" class="btn btn-danger">Action</button>-->
-                <!--<button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
-                <!--<span class="caret"></span>-->
-                <!--<span class="sr-only">Toggle Dropdown</span>-->
-                <!--</button>-->
-                <!--<ul class="dropdown-menu">-->
-                <!--<li><a href="#">Action</a></li>-->
-                <!--<li><a href="#">Another action</a></li>-->
-                <!--<li><a href="#">Something else here</a></li>-->
-                <!--<li role="separator" class="divider"></li>-->
-                <!--<li><a href="#">Separated link</a></li>-->
-                <!--</ul>-->
-                <!--</div>-->
-                <!--<li><a href="#">Link</a></li>-->
-                <!--<li class="dropdown">-->
-                <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>-->
-                <!--<ul class="dropdown-menu">-->
-                <!--<li><a href="#">Action</a></li>-->
-                <!--<li><a href="#">Another action</a></li>-->
-                <!--<li><a href="#">Something else here</a></li>-->
-                <!--<li role="separator" class="divider"></li>-->
-                <!--<li><a href="#">Separated link</a></li>-->
-                <!--</ul>-->
-                <!--</li>-->
                 <ul class="nav navbar-nav navbar-right">
                     <!-- Single button -->
                     <div class="btn-group" style="margin:7px 7px">
-                        <button type="button" class="btn btn-info">Login</button>
+                        <a href="{{ url_for('login_form') }}" type="button" class="btn btn-success">Login</a>
                         <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false">
                             <span class="caret"></span>
                             <span class="sr-only">Toggle Dropdown</span>
                         </button>
                         <ul class="dropdown-menu">
-                            <li><a href="#">Action</a></li>
+                            <li><a href="{{ url_for('login') }}">a</a></li>
                             <li><a href="#">Another action</a></li>
                             <li><a href="#">Something else here</a></li>
                             <li role="separator" class="divider"></li>
@@ -95,7 +84,6 @@
                         </ul>
                     </div>
                 </ul>
-                <!--</ul>-->
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
     </nav>
@@ -104,11 +92,20 @@
 {% block content %}
 
 {% endblock %}
-<!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
-<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
-<!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
-<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+<script>
+    function isContain(str, substr) {
+        return new RegExp(substr).test(str);
+    }
 
+    $('.navbar-nav').find('a').each(function () {
+        if (!isContain(this.className, "btn")) {
+            if (this.href == document.location.href || document.location.href.search(this.href) >= 0) {
+                $('ul.nav > li').removeClass('active');
+                $(this).parent().addClass('active'); // this.className = 'active';
+            }
+        }
+    });
+</script>
 </body>
 </html>
