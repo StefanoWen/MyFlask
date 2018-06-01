@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 col-lg-offset-1">
+                <h1 class="text-center">{{ post.title }}</h1>
+            </div>
+        </div>
+        <div class="middle text-center">
+            <br>
+            <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+            <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+            <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+        </div>
+        <p class="pull-right"><b style="font-size: 18px">author : {{ author }}</b></p>
+        <br>
+        <div class="row">
+            <div class="col-lg-12"
+                 style="background-color: #EAC78D;border:1px solid;border-radius:15px;">
+                <span style="font-size: 19px;font-family: Helvetica, 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑', Arial, sans-serif;">
+                    {{ post.content|md|safe }}</span>
+                <br></div>
+        </div>
+
+    </div>
+{% endblock %}

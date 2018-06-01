@@ -1,14 +1,19 @@
 {% extends 'base.html' %}
 {% block head %}
     <style>
-        .mid{
+        .mid {
             margin: 3% 23%;
         }
     </style>
 {% endblock %}
 {% block content %}
     <div class="mid">
-    <h1>this is for index</h1>
-    <div class="well well-sm"><span class="glyphicon glyphicon-volume-up"></span> Welcome to my Blog</div>
+        {% if title %}
+            <h1>Welcome {{ title }}</h1>
+        {% else %}
+            <h1>Welcome</h1>
+        {% endif %}
+
+        <div class="well well-sm"><span class="glyphicon glyphicon-volume-up"></span> Welcome to my Blog</div>
     </div>
 {% endblock %}

@@ -24,6 +24,8 @@
     <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
     <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
     <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../static/src/js/heart.js"></script>
+
     <style type="text/css">
         body {
             padding-top: 70px;
@@ -32,11 +34,12 @@
     {% block head %}
 
     {% endblock %}
-    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='snail.ico') }}">
 </head>
 <body>
 
 
+<canvas id="canvas" style="position:absolute;z-index:-2;"></canvas>
 <div class="container">
     <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container-fluid">
@@ -54,9 +57,12 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="{{ url_for('a') }}">a <span class="sr-only">(current)</span></a></li>
+                    <li class="active"><a href="{{ url_for('hello_world') }}">Index<span
+                            class="sr-only">(current)</span></a></li>
                     <li><a href="{{ url_for('b') }}">b</a></li>
                     <li><a href="{{ url_for('home') }}">home</a></li>
+                    <li><a href="{{ url_for('md') }}">md</a></li>
+                    <li><a href="{{ url_for('write_article') }}">Write A New Post</a></li>
                 </ul>
                 <img alt="avatar" alt="avatar " src="../static/src/image/jake.jpg"
                      style="max-width:40px;margin-top:5px;margin-left:14px">
@@ -68,19 +74,32 @@
                 </form>
                 <ul class="nav navbar-nav navbar-right">
                     <!-- Single button -->
+
                     <div class="btn-group" style="margin:7px 7px">
-                        <a href="{{ url_for('login_form') }}" type="button" class="btn btn-success">Login</a>
-                        <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown"
+                        {#                        {% if session['username'] is equalto False %}#}
+                        {% if session.get('username') %}
+                            <a href="{{ url_for('profile') }}" type="button" class="btn btn-primary">profile</a>
+                            {#                            <a class="nav-link d-none d-md-block d-lg-block">|</a>#}
+                        {% else %}
+                            <a href="{{ url_for('login_form') }}" type="button" class="btn btn-primary">Login</a>
+                            {#                            <a class="nav-link d-none d-md-block d-lg-block">|</a>#}
+                        {% endif %}
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false">
                             <span class="caret"></span>
                             <span class="sr-only">Toggle Dropdown</span>
                         </button>
                         <ul class="dropdown-menu">
-                            <li><a href="{{ url_for('login') }}">a</a></li>
-                            <li><a href="#">Another action</a></li>
-                            <li><a href="#">Something else here</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="#">Separated link</a></li>
+                            {% if session.get('username') %}
+                                {#                                <li><a href="#">Change Password</a></li>#}
+                                <li><a href="{{ url_for('logout') }}" type="button" class="btn">Logout</a>
+                                </li>
+
+                            {% else %}
+                                <li><a href="{{ url_for('register_form') }}" type="button" class="btn">register</a></li>
+                                {#                                <li><a href="{{ url_for('register_form') }}">register</a></li>#}
+                            {% endif %}
+                            {#                            <li role="separator" class="divider"></li>#}
                         </ul>
                     </div>
                 </ul>
@@ -92,20 +111,7 @@
 {% block content %}
 
 {% endblock %}
-
-<script>
-    function isContain(str, substr) {
-        return new RegExp(substr).test(str);
-    }
-
-    $('.navbar-nav').find('a').each(function () {
-        if (!isContain(this.className, "btn")) {
-            if (this.href == document.location.href || document.location.href.search(this.href) >= 0) {
-                $('ul.nav > li').removeClass('active');
-                $(this).parent().addClass('active'); // this.className = 'active';
-            }
-        }
-    });
-</script>
+<script type="text/javascript" src="../static/src/js/cycle.js"></script>
+<script type="text/javascript" src="../static/src/js/active_check.js"></script>
 </body>
 </html>
