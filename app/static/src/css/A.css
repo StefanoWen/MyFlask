@@ -1,0 +1,19 @@
+.A_css:hover {
+    color: black;
+    text-decoration: none;
+}
+
+.A_css:link {
+    color: black;
+    text-decoration: none;
+}
+
+.A_css:active {
+    color: black;
+    text-decoration: none;
+}
+
+.A_css:visited {
+    color: black;
+    text-decoration: none;
+}

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
     {% if title %}
-        <title>{{ title }} - Stefanow's Blog</title>
+        <title>{{ title }} - Stefanow's BlogSystem</title>
     {% else %}
         <title>Stefanow's Blog</title>
     {% endif %}
@@ -45,44 +45,47 @@
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                        data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="/">Stefanow's Blog</a>
+                <a class="navbar-brand" href="/">Stefanow's BlogSystem</a>
+
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="{{ url_for('hello_world') }}">Index<span
+                    <li ><a href="{{ url_for('hello_world') }}">Home<span
                             class="sr-only">(current)</span></a></li>
-                    <li><a href="{{ url_for('b') }}">b</a></li>
-                    <li><a href="{{ url_for('home') }}">home</a></li>
-                    <li><a href="{{ url_for('md') }}">md</a></li>
+                    <li><a href="{{ url_for('post') }}">Articles</a></li>
                     <li><a href="{{ url_for('write_article') }}">Write A New Post</a></li>
                 </ul>
-                <img alt="avatar" alt="avatar " src="../static/src/image/jake.jpg"
-                     style="max-width:40px;margin-top:5px;margin-left:14px">
-                <form class="navbar-form navbar-left">
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search">
-                    </div>
-                    <button type="submit" class="btn btn-default">Submit</button>
-                </form>
-                <ul class="nav navbar-nav navbar-right">
-                    <!-- Single button -->
 
+                <ul class="nav navbar-nav navbar-left">
+
+                    <li><span class="glyphicon glyphicon-backward" aria-hidden="true"
+                              style="padding-top: 16px;padding-left: 300px;">&nbsp;</span></li>
+                    <li><span class="glyphicon glyphicon-play" aria-hidden="true"
+                              style="padding-top: 16px">&nbsp;</span></li>
+                    <li><span class="glyphicon glyphicon-forward" aria-hidden="true"
+                              style="padding-top: 16px">&nbsp;</span></li>
+                    <li><span class="glyphicon glyphicon-search" aria-hidden="true"
+                              style="padding-top: 16px">&nbsp;</span></li>
+                    <li><span class="glyphicon glyphicon-list" aria-hidden="true" style="padding-top: 16px">&nbsp;&nbsp;&nbsp;
+                    </span>
+                    </li>
+                    <script charset="Shift_JIS" src="../static/src/js/honehone_clock_tr.js"></script>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <div class="clock"></div>
+                    {% if session.get('username') %}
+                        <span style="font-family: Jokerman,serif;font-size: 27px;">hello <b>{{ session['username'] }}</b></span>
+                        <img src="https://www.gravatar.com/avatar/{{ avatar }}?d=robohash&s=50">
+                    {% else %}
+                        <img alt="avatar" alt="avatar " src="../static/src/image/jake.jpg" style="max-width:45px;">
+                    {% endif %}
+                    <!-- Single button -->
                     <div class="btn-group" style="margin:7px 7px">
-                        {#                        {% if session['username'] is equalto False %}#}
                         {% if session.get('username') %}
                             <a href="{{ url_for('profile') }}" type="button" class="btn btn-primary">profile</a>
-                            {#                            <a class="nav-link d-none d-md-block d-lg-block">|</a>#}
                         {% else %}
                             <a href="{{ url_for('login_form') }}" type="button" class="btn btn-primary">Login</a>
-                            {#                            <a class="nav-link d-none d-md-block d-lg-block">|</a>#}
                         {% endif %}
                         <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false">
@@ -91,15 +94,11 @@
                         </button>
                         <ul class="dropdown-menu">
                             {% if session.get('username') %}
-                                {#                                <li><a href="#">Change Password</a></li>#}
                                 <li><a href="{{ url_for('logout') }}" type="button" class="btn">Logout</a>
                                 </li>
-
                             {% else %}
                                 <li><a href="{{ url_for('register_form') }}" type="button" class="btn">register</a></li>
-                                {#                                <li><a href="{{ url_for('register_form') }}">register</a></li>#}
                             {% endif %}
-                            {#                            <li role="separator" class="divider"></li>#}
                         </ul>
                     </div>
                 </ul>
@@ -113,5 +112,31 @@
 {% endblock %}
 <script type="text/javascript" src="../static/src/js/cycle.js"></script>
 <script type="text/javascript" src="../static/src/js/active_check.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        setInterval(function () {
+            // Create a newDate() object and extract the seconds of the current time on the visitor's
+            var seconds = new Date().getSeconds();
+            // Add a leading zero to seconds value
+            $("#sec").html((seconds < 10 ? "0" : "") + seconds);
+        }, 1000);
+
+        setInterval(function () {
+            // Create a newDate() object and extract the minutes of the current time on the visitor's
+            var minutes = new Date().getMinutes();
+            // Add a leading zero to the minutes value
+            $("#min").html((minutes < 10 ? "0" : "") + minutes);
+        }, 1000);
+
+        setInterval(function () {
+            // Create a newDate() object and extract the hours of the current time on the visitor's
+            var hours = new Date().getHours();
+            // Add a leading zero to the hours value
+            $("#hours").html((hours < 10 ? "0" : "") + hours);
+        }, 1000);
+
+    });
+</script>
 </body>
 </html>

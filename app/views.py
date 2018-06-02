@@ -9,7 +9,11 @@ from markdown import markdown
 
 
 @app.route('/')
-@app.route('/index/')
+def welcome():
+    return render_template('welcome.html')
+
+
+@app.route('/home/')
 def hello_world():
     if 'username' in session.keys():
         # title = session['username']
@@ -91,31 +95,11 @@ def logout():
     return redirect(url_for('hello_world'))
 
 
-@app.route('/a/')
-def a():
-    return render_template('a.html')
-
-
-@app.route('/b/')
-def b():
-    return render_template('test.html')
-
-
-@app.route('/home/')
-def home():
+@app.route('/post/')
+def post():
     title = u'文章列表'
     posts = db_session.query(Article).order_by(Article.data_publish.desc()).all()
     authors = db_session.query(User.id, User.username).all()
-    # dic = {}
-    # dic1 = {}
-    # post_title = []
-    # post_id = []
-    # for i in data:
-    #     post_title.append(i.title)
-    #     post_id.append(i.id)
-    #     dic[i.title] = i.content
-    #     dic1[i.title] = i.id
-    # print data[0].id
     db_session.close()
     return render_template('home.html', posts=posts, title=title, authors=authors)
 
@@ -139,18 +123,7 @@ def profile():
     else:
         title = None
         name = None
-    # avatar = 'http://www.gravatar.com/avatar/' + md5(self.email).hexdigest() + '?d=mm&s=' + str(size)
     return render_template('profile.html', title=title, name=name, avatar=avatar_hash)
-
-
-@app.route('/md/')
-def md():
-    # [XSS](javascript:alert(1))
-    body = '''[XSS](javascript:alert(1))
-    ## header 2
-    ### header 3'''
-    tmp = [markdown(i.strip()) for i in body.split('\n')]
-    return render_template('md.html', title='<h1>Hello World</h1>', body=tmp)
 
 
 # var data="<font color='red'>测试数据</font>";//带有html标签的测试数据
@@ -164,7 +137,6 @@ def md():
 @app.template_filter('md')
 def markdown_to_html(txt):
     # md过滤器
-    from markdown import markdown
     return markdown(txt)
 
 
@@ -192,9 +164,9 @@ def write_article():
 def show_post(p_id):
     title = u'文章详情'
     # p_id = request.args.get('p_id')
-    post = (db_session.query(Article).filter(Article.id == p_id).first())
+    posts = (db_session.query(Article).filter(Article.id == p_id).first())
     author = db_session.query(User.username).filter(Article.user_id == User.id, Article.id == p_id).first()[0]
-    return render_template('details.html', post=post, title=title, author=author)
+    return render_template('details.html', post=posts, title=title, author=author)
 
 
 @app.route('/post/<username>')

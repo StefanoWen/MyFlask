@@ -1,0 +1,32 @@
+/*web background*/
+.container {
+    margin-top: 6.5%;
+    margin-bottom: 6.5%;
+    display: table;
+    height: 100%;
+}
+
+.row {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+/* centered columns styles */
+.row-centered {
+    text-align: center;
+}
+
+.col-centered {
+    display: inline-block;
+    float: none;
+    text-align: left;
+    margin-right: -4px;
+}
+
+body {
+    padding-top: 70px;
+    background: url("1.jpg") no-repeat;
+    background-size: cover;
+    -webkit-background-size: cover;
+    -o-background-size: cover;
+}
