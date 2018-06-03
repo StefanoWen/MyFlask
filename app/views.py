@@ -6,7 +6,7 @@ from flask import render_template, request, redirect, url_for, session
 from models import db_session, User, Article
 from hashlib import md5
 from markdown import markdown
-
+from os import popen
 
 @app.route('/')
 def welcome():
@@ -20,7 +20,7 @@ def hello_world():
         name = session.get('username')
     else:
         name = None
-    return render_template('index.html', title=name)
+    return render_template('home.html', title=name)
 
 
 @app.route('/login/', methods=['GET'])
@@ -101,7 +101,7 @@ def post():
     posts = db_session.query(Article).order_by(Article.data_publish.desc()).all()
     authors = db_session.query(User.id, User.username).all()
     db_session.close()
-    return render_template('home.html', posts=posts, title=title, authors=authors)
+    return render_template('articles.html', posts=posts, title=title, authors=authors)
 
 
 @app.route('/profile/')
@@ -166,7 +166,7 @@ def show_post(p_id):
     # p_id = request.args.get('p_id')
     posts = (db_session.query(Article).filter(Article.id == p_id).first())
     author = db_session.query(User.username).filter(Article.user_id == User.id, Article.id == p_id).first()[0]
-    return render_template('details.html', post=posts, title=title, author=author)
+    return render_template('article_details.html', post=posts, title=title, author=author)
 
 
 @app.route('/post/<username>')
@@ -174,3 +174,18 @@ def show_user_article(username):
     title = "Articles wrote by " + username
     data = db_session.query(Article).filter(Article.user_id == User.id, User.username == username).all()
     return render_template('user_post.html', title=title, posts=data, username=username)
+
+
+@app.route('/ping/', methods=['GET'])
+def get_ping_command():
+    title = 'Ping'
+    return render_template('ping.html', title=title)
+
+
+@app.route('/ping/', methods=['POST'])
+def ping():
+    title = 'Ping'
+    ip = request.form.get('command')
+    ip = 'ping -c 2 ' + ip
+    res = (popen(ip).read().decode('gb2312'))
+    return render_template('ping.html', title=title, res=res)

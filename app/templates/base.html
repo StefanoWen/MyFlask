@@ -6,9 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
     {% if title %}
-        <title>{{ title }} - Stefanow's BlogSystem</title>
+        <title>{{ title }} - Wenmingji's BlogSystem</title>
     {% else %}
-        <title>Stefanow's Blog</title>
+        <title>Wenmingji's BlogSystem</title>
     {% endif %}
 
     <!-- Bootstrap -->
@@ -54,6 +54,7 @@
                     <li ><a href="{{ url_for('hello_world') }}">Home<span
                             class="sr-only">(current)</span></a></li>
                     <li><a href="{{ url_for('post') }}">Articles</a></li>
+                    <li><a href="{{ url_for('get_ping_command') }}">ƃuᴉԀ一下好吗</a></li>
                     <li><a href="{{ url_for('write_article') }}">Write A New Post</a></li>
                 </ul>
 

@@ -9,8 +9,7 @@
             <h2><span class="label label-default">标题</span></h2>
             <div class="input-group input-group-lg">
                 <span class="input-group-addon" id="sizing-addon1"><i class="glyphicon glyphicon-pencil"></i></span>
-                <input type="text" class="form-control" aria-describedby="sizing-addon1" name="title"
-                       type="text" required autofocus>
+                <input type="text" class="form-control" aria-describedby="sizing-addon1" name="title" required autofocus>
             </div>
             <br>
             <h2><span class="label label-default">正文</span></h2>
@@ -29,9 +28,4 @@
             {% endif %}
         </form>
     </div>
-    <script>
-        ClassicEditor
-            .create(document.querySelector('#editor'));
-        {#.catch(error=>console.error(error));#}
-    </script>
 {% endblock %}
