@@ -18,34 +18,41 @@
             <div class="command">
                 <div class="row">
                     <div class="col-lg-5 col-lg-offset-4">
-                        <h2><span class="label label-default text-center">请ping我的ip，看你能ping通吗？</span></h2>
+                        <h2><span class="label label-default text-center" style="font-family: 微软雅黑;">请ping我的ip，看你能ping通吗？</span></h2>
                         <br>
                     </div>
                 </div>
                 <form action="{{ url_for('get_ping_command') }}" method="post">
-                    <div class="col-lg-6 col-lg-offset-3">
-                        <div class="input-group input-group-lg">
+                    <div class="row">
+                        <div class="col-lg-6 col-lg-offset-3">
+                            <div class="input-group input-group-lg">
                             <span class="input-group-addon" id="sizing-addon1"><i
                                     class="glyphicon glyphicon-send"></i></span>
-                            <input type="text" class="form-control" aria-describedby="sizing-addon1" name="command"
-                                   required
-                                   autofocus>
-                        </div>
-                        </div>
-                        {% if res %}
-                            <div class="row">
-                                <div class="col-lg-2 col-lg-offset-5">
-                                    <br>
-                                    {{ res }}
-                                </div>
+
+                                <input type="text" class="form-control" aria-describedby="sizing-addon1" name="command"
+                                       placeholder="127.0.0.1" required
+                                       autofocus>
+                                <span class="input-group-btn">
+        <button class="btn btn-default btn-info" type="submit">Go！</button>
+      </span>
                             </div>
-                        {% endif %}
+                        </div>
+                    </div>
+                    {% if res %}
                         <div class="row">
-                            <div class="col-lg-2 col-lg-offset-5">
+                            <div class="col-lg-6 col-lg-offset-3">
                                 <br>
-                                <button type="submit" class="btn btn-success btn-block">SEND COMMAND</button>
+                                {{ res }}
                             </div>
                         </div>
+                    {% endif %}
+
+{#                    <div class="row">#}
+{#                        <div class="col-lg-2 col-lg-offset-5">#}
+{#                            <br>#}
+{#                            <button type="submit" class="btn btn-success btn-block">SEND COMMAND</button>#}
+{#                        </div>#}
+{#                    </div>#}
                 </form>
                 <div class="row">
                 </div>
