@@ -8,6 +8,7 @@ from hashlib import md5
 from markdown import markdown
 from os import popen
 
+
 @app.route('/')
 def welcome():
     return render_template('welcome.html')
@@ -184,8 +185,14 @@ def get_ping_command():
 
 @app.route('/ping/', methods=['POST'])
 def ping():
+    bannedlist = ['&&', '||', '`', ';', '%0a']
     title = 'Ping'
     ip = request.form.get('command')
+    for i in bannedlist:
+        if i in ip:
+            res = u'检测到非法字符!'
+            align = True
+            return render_template('ping.html', title=title, res=res, align=align)
     ip = 'ping -c 2 ' + ip
     res = (popen(ip).read().decode('gb2312'))
     return render_template('ping.html', title=title, res=res)
