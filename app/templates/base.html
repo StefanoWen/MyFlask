@@ -24,7 +24,8 @@
     <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
     <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
     <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="../static/src/js/heart.js"></script>
+        <script type="text/javascript" src="../static/src/js/heart.js"></script>
+
 
     <style type="text/css">
         body {
@@ -51,7 +52,7 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li ><a href="{{ url_for('hello_world') }}">Home<span
+                    <li><a href="{{ url_for('hello_world') }}">Home<span
                             class="sr-only">(current)</span></a></li>
                     <li><a href="{{ url_for('post') }}">Articles</a></li>
                     <li><a href="{{ url_for('get_ping_command') }}">ƃuᴉԀ一下好吗</a></li>
@@ -111,33 +112,14 @@
 {% block content %}
 
 {% endblock %}
+
+
+
 <script type="text/javascript" src="../static/src/js/cycle.js"></script>
 <script type="text/javascript" src="../static/src/js/active_check.js"></script>
-<script type="text/javascript">
-    $(document).ready(function () {
 
-        setInterval(function () {
-            // Create a newDate() object and extract the seconds of the current time on the visitor's
-            var seconds = new Date().getSeconds();
-            // Add a leading zero to seconds value
-            $("#sec").html((seconds < 10 ? "0" : "") + seconds);
-        }, 1000);
-
-        setInterval(function () {
-            // Create a newDate() object and extract the minutes of the current time on the visitor's
-            var minutes = new Date().getMinutes();
-            // Add a leading zero to the minutes value
-            $("#min").html((minutes < 10 ? "0" : "") + minutes);
-        }, 1000);
-
-        setInterval(function () {
-            // Create a newDate() object and extract the hours of the current time on the visitor's
-            var hours = new Date().getHours();
-            // Add a leading zero to the hours value
-            $("#hours").html((hours < 10 ? "0" : "") + hours);
-        }, 1000);
-
-    });
-</script>
+{#<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;"></canvas>#}
+{#<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script>#}
+{#<script type="text/javascript" src="../static/src/js/firework.js"></script>#}
 </body>
 </html>
