@@ -2,7 +2,7 @@
 from datetime import datetime
 
 from app import app
-from flask import render_template, request, redirect, url_for, session
+from flask import render_template, request, redirect, url_for, session, render_template_string
 from models import db_session, User, Article
 from hashlib import md5
 from markdown import markdown
@@ -127,10 +127,6 @@ def profile():
     return render_template('profile.html', title=title, name=name, avatar=avatar_hash)
 
 
-# var data="<font color='red'>测试数据</font>";//带有html标签的测试数据
-# $('#div1').html(data);//通过html()方法将数据输出到div中
-# var dobj=document.getElementById("div");
-# dobj.innerHTML = "<span>我是HTML代码</span>";
 # cursor.execute("insert into user(id,age,name,create_time,update_time) \
 # values('%d', '%d', '%s', '%s', '%s')
 # " % \
@@ -196,3 +192,31 @@ def ping():
     ip = 'ping -c 2 ' + ip
     res = (popen(ip).read().decode('gb2312'))
     return render_template('ping.html', title=title, res=res)
+
+
+@app.errorhandler(404)
+def page_not_found(e):
+    template = '''
+                {%% extends "base.html" %%}
+                {%% block head %%}
+                <style>
+                .container{
+                    float: none;
+                    display: block;
+                    margin-top: 5%%;
+                    margin-left: auto;
+                    margin-right: auto;
+                }
+                </style>
+                {%% endblock %%}
+                {%% block content %%}
+                <div class="container text-center">
+                <div class="center-content error">
+                <h1 style="font-size:100px;font-family:chiller;">404 Not Found</h1>
+                <h1>This is not the web page you are looking for.</h1>
+                <h3>%s</h3>
+                </div>
+                {%% endblock %%}
+                ''' % request.url
+    return render_template_string(template), 404
+    # return render_template('404.html'), 404

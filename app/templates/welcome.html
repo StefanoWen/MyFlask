@@ -67,7 +67,7 @@ html,body{
         });
 
         var initAutoType = function () {
-            var types = ["Welcome :D\r\n", "This is A Simple BlogSystem.\r\n", "The BlogSystem is Made By Wenmingji.\r\n", "Have fun here :p\r\n"];
+            var types = ["Welcome :D\r\n", "This is A Simple Blog,\r\n\r\nproduced By Wenmingji.\r\n", "Have fun here :P\r\n"];
             var words = $("#first-words");
 
             var stopType = false;     //用于停止自动打字的
@@ -86,7 +86,7 @@ html,body{
                     //如果删完了，就开始
                     if (isNext) {
                         index++;
-                        index = index % 4;
+                        index = index % 3;
                         isNext = false;
                     }
                     tempWords = types[index].substring(0, tempWords.length + 1);
